@@ -1,0 +1,121 @@
+-- Procedimiento para realizar una compra
+DELIMITER //
+
+CREATE PROCEDURE RealizarCompra(
+    IN p_ProveedorID INT,
+    IN p_ProductoID INT,
+    IN p_Cantidad INT,
+    IN p_PrecioUnitario DECIMAL(10, 2)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error durante la compra';
+    END;
+
+    START TRANSACTION;
+
+    COMMIT;
+END //
+
+DELIMITER ;
+
+-- Procedimiento para realizar un pedido
+DELIMITER //
+
+CREATE PROCEDURE RealizarPedido(
+    IN p_ClienteID INT,
+    IN p_ProductoID INT,
+    IN p_Cantidad INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Error durante el pedido';
+    END;
+
+    START TRANSACTION;
+
+    COMMIT;
+END //
+
+DELIMITER ;
+
+-- Procedimiento para agregar un nuevo cliente
+DELIMITER //
+
+CREATE PROCEDURE AgregarCliente(
+    IN p_Nombre VARCHAR(50),
+    IN p_Apellido VARCHAR(50),
+    IN p_Email VARCHAR(100)
+)
+BEGIN
+    INSERT INTO Clientes (Nombre, Apellido, Email)
+    VALUES (p_Nombre, p_Apellido, p_Email);
+END //
+
+DELIMITER ;
+
+-- Procedimiento para agregar un nuevo producto
+DELIMITER //
+
+CREATE PROCEDURE AgregarProducto(
+    IN p_Nombre VARCHAR(100),
+    IN p_Descripcion TEXT,
+    IN p_Precio DECIMAL(10, 2)
+)
+BEGIN
+    INSERT INTO Productos (Nombre, Descripcion, Precio)
+    VALUES (p_Nombre, p_Descripcion, p_Precio);
+END //
+
+DELIMITER ;
+
+-- Procedimiento para agregar una nueva categoría de producto
+DELIMITER //
+
+CREATE PROCEDURE AgregarCategoriaProducto(
+    IN p_Nombre VARCHAR(50)
+)
+BEGIN
+    INSERT INTO Categorias (Nombre)
+    VALUES (p_Nombre);
+END //
+
+DELIMITER ;
+
+-- Procedimiento para agregar un nuevo empleado
+DELIMITER //
+
+CREATE PROCEDURE AgregarEmpleado(
+    IN p_Nombre VARCHAR(50),
+    IN p_Apellido VARCHAR(50),
+    IN p_Puesto VARCHAR(50)
+)
+BEGIN
+    INSERT INTO Empleados (Nombre, Apellido, Puesto)
+    VALUES (p_Nombre, p_Apellido, p_Puesto);
+END //
+
+DELIMITER ;
+
+-- Procedimiento para agregar un nuevo proveedor
+DELIMITER //
+
+CREATE PROCEDURE AgregarProveedor(
+    IN p_NombreEmpresa VARCHAR(100),
+    IN p_Contacto VARCHAR(100),
+    IN p_Telefono VARCHAR(20)
+)
+BEGIN
+    INSERT INTO Proveedores (NombreEmpresa, Contacto, Telefono)
+    VALUES (p_NombreEmpresa, p_Contacto, p_Telefono);
+END //
+
+DELIMITER ;
+
+
